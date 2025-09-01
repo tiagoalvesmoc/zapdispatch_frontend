@@ -1,14 +1,75 @@
-import BrandOne from '../images/brand/brand-01.svg';
-import BrandTwo from '../images/brand/brand-02.svg';
-import BrandThree from '../images/brand/brand-03.svg';
-import BrandFour from '../images/brand/brand-04.svg';
-import BrandFive from '../images/brand/brand-05.svg';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 const TableOne = () => {
+  const sampleData = [
+    {
+      id: '1',
+      campaign: 'Promoção Black Friday',
+      date: new Date('2024-12-01T10:30:00'),
+      contact: 'João Silva',
+      phone: '(11) 99988-7766',
+      message: 'Olá João! Aproveite nossa super promoção de Black Friday com até 70% de desconto! Acesse nosso site e garante já o seu.',
+      status: 'delivered'
+    },
+    {
+      id: '2',
+      campaign: 'Lançamento Produto',
+      date: new Date('2024-12-01T11:15:00'),
+      contact: 'Maria Santos',
+      phone: '(11) 98877-6655',
+      message: 'Oi Maria! Temos novidades incríveis para você. Confira nosso novo produto que vai revolucionar seu dia a dia!',
+      status: 'sent'
+    },
+    {
+      id: '3',
+      campaign: 'Recuperação Carrinho',
+      date: new Date('2024-12-01T09:45:00'),
+      contact: 'Pedro Costa',
+      phone: '(11) 97766-5544',
+      message: 'Oi Pedro! Você esqueceu alguns itens no seu carrinho. Finalize sua compra e ganhe 10% de desconto!',
+      status: 'failed'
+    }
+  ];
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'delivered':
+        return (
+          <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
+            Entregue
+          </p>
+        );
+      case 'sent':
+        return (
+          <p className="inline-flex rounded-full bg-primary bg-opacity-10 py-1 px-3 text-sm font-medium text-primary">
+            Enviado
+          </p>
+        );
+      case 'failed':
+        return (
+          <p className="inline-flex rounded-full bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium text-danger">
+            Falhou
+          </p>
+        );
+      case 'pending':
+        return (
+          <p className="inline-flex rounded-full bg-warning bg-opacity-10 py-1 px-3 text-sm font-medium text-warning">
+            Pendente
+          </p>
+        );
+      default:
+        return (
+          <p className="inline-flex rounded-full bg-gray bg-opacity-10 py-1 px-3 text-sm font-medium text-gray">
+            Desconhecido
+          </p>
+        );
+    }
+  };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-      
+        Histórico de Envios
       </h4>
 
       <div className="flex flex-col">
@@ -20,18 +81,17 @@ const TableOne = () => {
           </div>
           <div className="p-2.5 text-center xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Data envio
+              Data Envio
             </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Numero
+              Contato
             </h5>
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Mensagem
+              Telefone
             </h5>
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
@@ -41,149 +101,44 @@ const TableOne = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5">
-          <div className="flex items-center gap-3 p-2.5 xl:p-5">
-            <div className="flex-shrink-0">
-              <img src={BrandOne} alt="Brand" />
+        {sampleData.map((item, index) => (
+          <div key={item.id} className={`grid grid-cols-3 sm:grid-cols-5 ${index < sampleData.length - 1 ? 'border-b border-stroke dark:border-strokedark' : ''}`}>
+            <div className="flex items-center gap-3 p-2.5 xl:p-5">
+              <div className="flex-shrink-0">
+                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="text-primary font-medium text-sm">
+                    {item.campaign.charAt(0)}
+                  </span>
+                </div>
+              </div>
+              <p className="hidden text-black dark:text-white sm:block font-medium">
+                {item.campaign}
+              </p>
             </div>
-            <p className="hidden text-black dark:text-white sm:block">5538992507225</p>
-          </div>
 
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-          <p className="inline-flex rounded-full bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium text-danger">
-                  Unpaid
-                </p>
-          </div>
-
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-          <p className="inline-flex rounded-full bg-warning bg-opacity-10 py-1 px-3 text-sm font-medium text-warning">
-                  Pending
-                </p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-          <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
-                  Paid
-                </p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-meta-5">4.8%</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5">
-          <div className="flex items-center gap-3 p-2.5 xl:p-5">
-            <div className="flex-shrink-0">
-              <img src={BrandTwo} alt="Brand" />
+            <div className="flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white text-sm">
+                {format(item.date, 'dd/MM/yyyy HH:mm', { locale: ptBR })}
+              </p>
             </div>
-            <p className="hidden text-black dark:text-white sm:block">
-              Twitter
-            </p>
-          </div>
 
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <p className="text-black dark:text-white">02/05/2023</p>
-          </div>
-
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <p className="text-meta-3">5538992507225</p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-black dark:text-white">
-            Olá Tiago alves!
-
-Que tal aproveitar nossos planos incríveis e dar um UP na sua conexão?
-
-Sabemos como é importante ter uma internet rápida e confiável nos dias de hoje.
-Com nossos novos planos, você vai poder navegar, assistir a filmes e séries, jogar online e trabalhar remotamente com muito mais velocidade e qualidade.
-
-bit.ly/UPGRADE_MICROTELL
-            </p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-meta-5">4.3%</p>
-          </div>
-        </div>
-
-        {/* <div className="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5">
-          <div className="flex items-center gap-3 p-2.5 xl:p-5">
-            <div className="flex-shrink-0">
-              <img src={BrandThree} alt="Brand" />
+            <div className="flex items-center justify-center p-2.5 xl:p-5">
+              <div className="text-center">
+                <p className="text-black dark:text-white font-medium">{item.contact}</p>
+              </div>
             </div>
-            <p className="hidden text-black dark:text-white sm:block">Github</p>
-          </div>
 
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <p className="text-black dark:text-white">2.1K</p>
-          </div>
-
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <p className="text-meta-3">$4,290</p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-black dark:text-white">420</p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-meta-5">3.7%</p>
-          </div>
-        </div> */}
-
-        {/* <div className="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5">
-          <div className="flex items-center gap-3 p-2.5 xl:p-5">
-            <div className="flex-shrink-0">
-              <img src={BrandFour} alt="Brand" />
+            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+              <p className="text-black dark:text-white">
+                {item.phone}
+              </p>
             </div>
-            <p className="hidden text-black dark:text-white sm:block">Vimeo</p>
-          </div>
 
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <p className="text-black dark:text-white">1.5K</p>
-          </div>
-
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <p className="text-meta-3">$3,580</p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-black dark:text-white">389</p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-meta-5">2.5%</p>
-          </div>
-        </div> */}
-
-        {/* <div className="grid grid-cols-3 sm:grid-cols-5">
-          <div className="flex items-center gap-3 p-2.5 xl:p-5">
-            <div className="flex-shrink-0">
-              <img src={BrandFive} alt="Brand" />
+            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+              {getStatusBadge(item.status)}
             </div>
-            <p className="hidden text-black dark:text-white sm:block">
-              Facebook
-            </p>
           </div>
-
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <p className="text-black dark:text-white">1.2K</p>
-          </div>
-
-          <div className="flex items-center justify-center p-2.5 xl:p-5">
-            <p className="text-meta-3">$2,740</p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-black dark:text-white">230</p>
-          </div>
-
-          <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-            <p className="text-meta-5">1.9%</p>
-          </div>
-        </div> */}
+        ))}
       </div>
     </div>
   );
